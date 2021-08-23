@@ -1,2 +1,2 @@
-# get-strong
-A Laravelp-based fitness app
+# GetStrong
+A Laravel-based fitness app
