@@ -19,8 +19,7 @@ class SessionTest extends TestCase
 
         $response = $this->get('/api/session');
 
-        $response
-            ->assertSuccessful()
+        $response->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
                 'name' => $sessions->pluck('name')->first(),
@@ -31,15 +30,63 @@ class SessionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_new_session() {
+    public function it_creates_a_new_session()
+    {
         $session = Session::factory()->make();
 
-        $response = $this->post('/api/session', [
+        $this->post('/api/session', [
+            'name' => $session->name,
+            'date' => $session->date,
+        ])->assertSuccessful();
+
+        $this->assertDatabaseHas('sessions', $session->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function it_shows_a_session()
+    {
+        $session = Session::factory()->create();
+
+        $this->get("/api/session/{$session->getKey()}")
+            ->assertSuccessful()
+            ->assertJsonFragment([
             'name' => $session->name,
             'date' => $session->date,
         ]);
+    }
 
-        $response->assertSuccessful();
-        $this->assertDatabaseHas('sessions', $session->toArray());
+    /**
+     * @test
+     */
+    public function it_updates_a_session()
+    {
+        $session = Session::factory()->create();
+
+        $this->put("/api/session/{$session->getKey()}", [
+            'name' => $newName = 'Updated name',
+            'date' => $newDate = now()->addDay()->toDateString(),
+        ])->assertSuccessful();
+
+        $this->assertDatabaseHas('sessions', [
+            'name' => $newName,
+            'date' => $newDate,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_destroys_a_session()
+    {
+        $session = Session::factory()->create();
+
+        $this->delete("/api/session/{$session->getKey()}")
+            ->assertSuccessful();
+
+        $this->assertDatabaseMissing('sessions', [
+            'id' => $session->getKey(),
+        ]);
     }
 }

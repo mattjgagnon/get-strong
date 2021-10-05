@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Session;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -22,37 +23,24 @@ class SessionController extends Controller
         return Session::create($request->all())->toJson();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Session  $session
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Session $session)
+    public function show(Session $session): Collection
     {
-        //
+        return Session::find($session);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Session  $session
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Session $session)
+    public function update(Request $request, Session $session): bool
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'date' => 'required',
+        ]);
+        $session->name = $request['name'];
+        $session->date = $request['date'];
+        return $session->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Session  $session
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Session $session)
+    public function destroy(Session $session): bool
     {
-        //
+        return $session->delete();
     }
 }
