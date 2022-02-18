@@ -7,16 +7,13 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_lists_all_tags()
+    /** @test */
+    public function it_lists_all_tags(): void
     {
         $tags = Tag::factory()->count(5)->create();
 
-        $response = $this->get('/api/tag');
-
-        $response->assertSuccessful()
+        $this->get('/api/tag')
+            ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
                 'name' => $tags->pluck('name')->first(),
@@ -24,10 +21,8 @@ class TagTest extends TestCase
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_new_tag()
+    /** @test */
+    public function it_creates_a_new_tag(): void
     {
         $tag = Tag::factory()->make();
 
@@ -37,10 +32,8 @@ class TagTest extends TestCase
         $this->assertDatabaseHas('tags', $tag->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_shows_a_tag()
+    /** @test */
+    public function it_shows_a_tag(): void
     {
         $tag = Tag::factory()->create();
 
@@ -49,10 +42,8 @@ class TagTest extends TestCase
             ->assertJsonFragment($tag->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_updates_a_tag()
+    /** @test */
+    public function it_updates_a_tag(): void
     {
         $tag = Tag::factory()->create([
             'type' => TAG::TYPE_SET,
@@ -69,10 +60,8 @@ class TagTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_destroys_a_tag()
+    /** @test */
+    public function it_destroys_a_tag(): void
     {
         $tag = Tag::factory()->create();
 

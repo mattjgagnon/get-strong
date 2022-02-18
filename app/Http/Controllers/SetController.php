@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Session;
 use App\Models\Set;
 use Illuminate\Http\Request;
 

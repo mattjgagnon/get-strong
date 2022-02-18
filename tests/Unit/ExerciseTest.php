@@ -10,16 +10,13 @@ class ExerciseTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
-    public function it_lists_all_exercises()
+    /** @test */
+    public function it_lists_all_exercises(): void
     {
         $exercises = Exercise::factory()->count(5)->create();
 
-        $response = $this->get('/api/exercise');
-
-        $response->assertSuccessful()
+        $this->get('/api/exercise')
+            ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
                 'name' => $exercises->pluck('name')->first(),
@@ -27,10 +24,8 @@ class ExerciseTest extends TestCase
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_new_exercise()
+    /** @test */
+    public function it_creates_a_new_exercise(): void
     {
         $exercise = Exercise::factory()->make();
 
@@ -42,10 +37,8 @@ class ExerciseTest extends TestCase
         $this->assertDatabaseHas('exercises', $exercise->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_shows_an_exercise()
+    /** @test */
+    public function it_shows_an_exercise(): void
     {
         $exercise = Exercise::factory()->create();
 
@@ -57,10 +50,8 @@ class ExerciseTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_updates_an_exercise()
+    /** @test */
+    public function it_updates_an_exercise(): void
     {
         $exercise = Exercise::factory()->create();
 
@@ -75,10 +66,8 @@ class ExerciseTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_destroys_an_exercise()
+    /** @test */
+    public function it_destroys_an_exercise(): void
     {
         $exercise = Exercise::factory()->create();
 

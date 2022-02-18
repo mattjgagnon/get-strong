@@ -10,10 +10,8 @@ class SetTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
-    public function it_lists_all_sets()
+    /** @test */
+    public function it_lists_all_sets(): void
     {
         $set = Set::factory()->count(5)->create();
         $first = $set->first()->toArray();
@@ -24,10 +22,8 @@ class SetTest extends TestCase
             ->assertJsonFragment($first);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_new_set()
+    /** @test */
+    public function it_creates_a_new_set(): void
     {
         $set = Set::factory()->make();
 
@@ -37,10 +33,8 @@ class SetTest extends TestCase
         $this->assertDatabaseHas('sets', $set->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_shows_a_set()
+    /** @test */
+    public function it_shows_a_set(): void
     {
         $set = Set::factory()->create();
 
@@ -49,10 +43,8 @@ class SetTest extends TestCase
             ->assertJsonFragment($set->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_updates_a_set()
+    /** @test */
+    public function it_updates_a_set(): void
     {
         $set = Set::factory()->create();
 
@@ -65,10 +57,8 @@ class SetTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_destroys_a_set()
+    /** @test */
+    public function it_destroys_a_set(): void
     {
         $set = Set::factory()->create();
 

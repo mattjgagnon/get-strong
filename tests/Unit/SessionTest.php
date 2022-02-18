@@ -10,16 +10,13 @@ class SessionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
-    public function it_lists_all_sessions()
+    /** @test */
+    public function it_lists_all_sessions(): void
     {
         $sessions = Session::factory()->count(5)->create();
 
-        $response = $this->get('/api/session');
-
-        $response->assertSuccessful()
+        $this->get('/api/session')
+            ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
                 'name' => $sessions->pluck('name')->first(),
@@ -27,10 +24,8 @@ class SessionTest extends TestCase
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_new_session()
+    /** @test */
+    public function it_creates_a_new_session(): void
     {
         $session = Session::factory()->make();
 
@@ -42,10 +37,8 @@ class SessionTest extends TestCase
         $this->assertDatabaseHas('sessions', $session->toArray());
     }
 
-    /**
-     * @test
-     */
-    public function it_shows_a_session()
+    /** @test */
+    public function it_shows_a_session(): void
     {
         $session = Session::factory()->create();
 
@@ -57,10 +50,8 @@ class SessionTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_updates_a_session()
+    /** @test */
+    public function it_updates_a_session(): void
     {
         $session = Session::factory()->create();
 
@@ -75,10 +66,8 @@ class SessionTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_destroys_a_session()
+    /** @test */
+    public function it_destroys_a_session(): void
     {
         $session = Session::factory()->create();
 
