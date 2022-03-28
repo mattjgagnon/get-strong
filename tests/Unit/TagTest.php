@@ -7,12 +7,15 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
+    public const API_TAG = '/api/tag';
+    public const TABLE_TAG = 'tags';
+
     /** @test */
     public function it_lists_all_tags(): void
     {
         $tags = Tag::factory()->count(5)->create();
 
-        $this->get('/api/tag')
+        $this->get(self::API_TAG)
             ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
@@ -26,10 +29,10 @@ class TagTest extends TestCase
     {
         $tag = Tag::factory()->make();
 
-        $this->post('/api/tag', $tag->toArray())
+        $this->post(self::API_TAG, $tag->toArray())
             ->assertSuccessful();
 
-        $this->assertDatabaseHas('tags', $tag->toArray());
+        $this->assertDatabaseHas(self::TABLE_TAG, $tag->toArray());
     }
 
     /** @test */
@@ -37,7 +40,7 @@ class TagTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $this->get("/api/tag/{$tag->getKey()}")
+        $this->get(self::API_TAG."/{$tag->getKey()}")
             ->assertSuccessful()
             ->assertJsonFragment($tag->toArray());
     }
@@ -49,12 +52,12 @@ class TagTest extends TestCase
             'type' => TAG::TYPE_SET,
         ]);
 
-        $this->put("/api/tag/{$tag->getKey()}", [
+        $this->put(self::API_TAG."/{$tag->getKey()}", [
             'name' => $newName = 'Updated name',
             'type' => $newType = Tag::TYPE_USER,
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('tags', [
+        $this->assertDatabaseHas(self::TABLE_TAG, [
             'name' => $newName,
             'type' => $newType,
         ]);
@@ -65,10 +68,10 @@ class TagTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $this->delete("/api/tag/{$tag->getKey()}")
+        $this->delete(self::API_TAG."/{$tag->getKey()}")
             ->assertSuccessful();
 
-        $this->assertDatabaseMissing('tags', [
+        $this->assertDatabaseMissing(self::TABLE_TAG, [
             'id' => $tag->getKey(),
         ]);
     }

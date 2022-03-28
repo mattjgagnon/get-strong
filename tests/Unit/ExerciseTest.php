@@ -10,12 +10,15 @@ class ExerciseTest extends TestCase
 {
     use RefreshDatabase;
 
+    public const API_EXERCISE = '/api/exercise';
+    public const TABLE_EXERCISE = 'exercises';
+
     /** @test */
     public function it_lists_all_exercises(): void
     {
         $exercises = Exercise::factory()->count(5)->create();
 
-        $this->get('/api/exercise')
+        $this->get(self::API_EXERCISE)
             ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
@@ -29,12 +32,12 @@ class ExerciseTest extends TestCase
     {
         $exercise = Exercise::factory()->make();
 
-        $this->post('/api/exercise', [
+        $this->post(self::API_EXERCISE, [
             'name' => $exercise->name,
             'instructions' => $exercise->instructions,
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('exercises', $exercise->toArray());
+        $this->assertDatabaseHas(self::TABLE_EXERCISE, $exercise->toArray());
     }
 
     /** @test */
@@ -42,7 +45,7 @@ class ExerciseTest extends TestCase
     {
         $exercise = Exercise::factory()->create();
 
-        $this->get("/api/exercise/{$exercise->getKey()}")
+        $this->get(self::API_EXERCISE."/{$exercise->getKey()}")
             ->assertSuccessful()
             ->assertJsonFragment([
             'name' => $exercise->name,
@@ -55,12 +58,12 @@ class ExerciseTest extends TestCase
     {
         $exercise = Exercise::factory()->create();
 
-        $this->put("/api/exercise/{$exercise->getKey()}", [
+        $this->put(self::API_EXERCISE."/{$exercise->getKey()}", [
             'name' => $newName = 'Updated name',
             'instructions' => $newInstructions = 'Updated instructions',
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('exercises', [
+        $this->assertDatabaseHas(self::TABLE_EXERCISE, [
             'name' => $newName,
             'instructions' => $newInstructions,
         ]);
@@ -71,10 +74,10 @@ class ExerciseTest extends TestCase
     {
         $exercise = Exercise::factory()->create();
 
-        $this->delete("/api/exercise/{$exercise->getKey()}")
+        $this->delete(self::API_EXERCISE."/{$exercise->getKey()}")
             ->assertSuccessful();
 
-        $this->assertDatabaseMissing('exercises', [
+        $this->assertDatabaseMissing(self::TABLE_EXERCISE, [
             'id' => $exercise->getKey(),
         ]);
     }

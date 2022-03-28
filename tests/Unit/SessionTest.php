@@ -10,12 +10,15 @@ class SessionTest extends TestCase
 {
     use RefreshDatabase;
 
+    public const API_SESSION = '/api/session';
+    public const TABLE_SESSION = 'sessions';
+
     /** @test */
     public function it_lists_all_sessions(): void
     {
         $sessions = Session::factory()->count(5)->create();
 
-        $this->get('/api/session')
+        $this->get(self::API_SESSION)
             ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment([
@@ -29,12 +32,12 @@ class SessionTest extends TestCase
     {
         $session = Session::factory()->make();
 
-        $this->post('/api/session', [
+        $this->post(self::API_SESSION, [
             'name' => $session->name,
             'date' => $session->date,
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('sessions', $session->toArray());
+        $this->assertDatabaseHas(self::TABLE_SESSION, $session->toArray());
     }
 
     /** @test */
@@ -42,7 +45,7 @@ class SessionTest extends TestCase
     {
         $session = Session::factory()->create();
 
-        $this->get("/api/session/{$session->getKey()}")
+        $this->get(self::API_SESSION."/{$session->getKey()}")
             ->assertSuccessful()
             ->assertJsonFragment([
             'name' => $session->name,
@@ -55,12 +58,12 @@ class SessionTest extends TestCase
     {
         $session = Session::factory()->create();
 
-        $this->put("/api/session/{$session->getKey()}", [
+        $this->put(self::API_SESSION."/{$session->getKey()}", [
             'name' => $newName = 'Updated name',
             'date' => $newDate = now()->addDay()->toDateString(),
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('sessions', [
+        $this->assertDatabaseHas(self::TABLE_SESSION, [
             'name' => $newName,
             'date' => $newDate,
         ]);
@@ -71,10 +74,10 @@ class SessionTest extends TestCase
     {
         $session = Session::factory()->create();
 
-        $this->delete("/api/session/{$session->getKey()}")
+        $this->delete(self::API_SESSION."/{$session->getKey()}")
             ->assertSuccessful();
 
-        $this->assertDatabaseMissing('sessions', [
+        $this->assertDatabaseMissing(self::TABLE_SESSION, [
             'id' => $session->getKey(),
         ]);
     }

@@ -10,13 +10,16 @@ class SetTest extends TestCase
 {
     use RefreshDatabase;
 
+    public const API_SET = '/api/set';
+    public const TABLE_SET = 'sets';
+
     /** @test */
     public function it_lists_all_sets(): void
     {
         $set = Set::factory()->count(5)->create();
         $first = $set->first()->toArray();
 
-        $this->get('/api/set')
+        $this->get(self::API_SET)
             ->assertSuccessful()
             ->assertJsonCount(5)
             ->assertJsonFragment($first);
@@ -27,10 +30,10 @@ class SetTest extends TestCase
     {
         $set = Set::factory()->make();
 
-        $this->post('/api/set', $set->toArray())
+        $this->post(self::API_SET, $set->toArray())
             ->assertSuccessful();
 
-        $this->assertDatabaseHas('sets', $set->toArray());
+        $this->assertDatabaseHas(self::TABLE_SET, $set->toArray());
     }
 
     /** @test */
@@ -38,7 +41,7 @@ class SetTest extends TestCase
     {
         $set = Set::factory()->create();
 
-        $this->get('/api/set/' . $set->getKey())
+        $this->get(self::API_SET."/{$set->getKey()}")
             ->assertSuccessful()
             ->assertJsonFragment($set->toArray());
     }
@@ -48,11 +51,11 @@ class SetTest extends TestCase
     {
         $set = Set::factory()->create();
 
-        $this->put("/api/set/{$set->getKey()}", [
+        $this->put(self::API_SET."/{$set->getKey()}", [
             'number' => $newNumber = $set->number + 1,
         ])->assertSuccessful();
 
-        $this->assertDatabaseHas('sets', [
+        $this->assertDatabaseHas(self::TABLE_SET, [
             'number' => $newNumber,
         ]);
     }
@@ -62,10 +65,10 @@ class SetTest extends TestCase
     {
         $set = Set::factory()->create();
 
-        $this->delete("/api/set/{$set->getKey()}")
+        $this->delete(self::API_SET."/{$set->getKey()}")
             ->assertSuccessful();
 
-        $this->assertDatabaseMissing('sets', [
+        $this->assertDatabaseMissing(self::TABLE_SET, [
             'id' => $set->getKey(),
         ]);
     }
