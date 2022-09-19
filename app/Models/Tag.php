@@ -13,6 +13,7 @@ class Tag extends Model
         'name',
         'type',
     ];
+    
     public const TYPE_EXERCISE = 'exercise';
     public const TYPE_SESSION = 'session';
     public const TYPE_SET = 'set';
