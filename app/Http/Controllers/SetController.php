@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Set;
 use Illuminate\Http\Request;
 
-class SetController extends Controller
+final class SetController extends Controller
 {
     public function index(): string
     {

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+final class Tag extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class Tag extends Model
         'name',
         'type',
     ];
-    
+
     public const TYPE_EXERCISE = 'exercise';
     public const TYPE_SESSION = 'session';
     public const TYPE_SET = 'set';

@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Session;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SessionFactory extends Factory
+final class SessionFactory extends Factory
 {
     protected $model = Session::class;
 

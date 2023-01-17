@@ -6,7 +6,7 @@ use App\Models\Exercise;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class ExerciseController extends Controller
+final class ExerciseController extends Controller
 {
     public function index(): string
     {

@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Set;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SetFactory extends Factory
+final class SetFactory extends Factory
 {
     protected $model = Set::class;
 

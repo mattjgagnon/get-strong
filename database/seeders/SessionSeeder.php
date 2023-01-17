@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Exercise;
+use App\Models\Session;
 use Illuminate\Database\Seeder;
 
-final class ExerciseSeeder extends Seeder
+final class SessionSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        Exercise::factory()
+        Session::factory()
             ->count(50)
             ->create();
     }

@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Exercise;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
-final class ExerciseSeeder extends Seeder
+final class UserSeeder extends Seeder
 {
     public function run()
     {
-        Exercise::factory()
+        User::factory()
             ->count(50)
             ->create();
     }
