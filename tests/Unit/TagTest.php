@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Models\Tag;
 use Tests\TestCase;
 
-class TagTest extends TestCase
+final class TagTest extends TestCase
 {
     public const API_TAG = '/api/tag';
     public const TABLE_TAG = 'tags';

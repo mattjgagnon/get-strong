@@ -6,7 +6,7 @@ use App\Models\Session;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SessionTest extends TestCase
+final class SessionTest extends TestCase
 {
     use RefreshDatabase;
 

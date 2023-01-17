@@ -6,7 +6,7 @@ use App\Models\Set;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SetTest extends TestCase
+final class SetTest extends TestCase
 {
     use RefreshDatabase;
 
