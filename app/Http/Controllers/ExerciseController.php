@@ -43,7 +43,7 @@ final class ExerciseController extends Controller
         //
     }
 
-    public function update(UpdateExerciseRequest $request, Exercise $exercise)
+    public function update(UpdateExerciseRequest $request, Exercise $exercise): bool
     {
         $request->validate([
             'name' => 'required',
@@ -54,11 +54,8 @@ final class ExerciseController extends Controller
         return $exercise->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Exercise $exercise)
+    public function destroy(Exercise $exercise): ?bool
     {
-        //
+        return $exercise->delete();
     }
 }
