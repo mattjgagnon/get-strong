@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
 use App\Models\Exercise;
+use Illuminate\Http\RedirectResponse;
 
 final class ExerciseController extends Controller
 {
@@ -22,7 +23,7 @@ final class ExerciseController extends Controller
         //
     }
 
-    public function store(StoreExerciseRequest $request)
+    public function store(StoreExerciseRequest $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
