@@ -22,12 +22,19 @@ final class ExerciseController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreExerciseRequest $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'instructions' => 'required',
+        ]);
+
+        $exercise = new Exercise();
+        $exercise->name = $request->input('name');
+        $exercise->instructions = $request->input('instructions');
+        $exercise->save();
+
+        return redirect()->route('exercise.index');
     }
 
     public function show(Exercise $exercise)
