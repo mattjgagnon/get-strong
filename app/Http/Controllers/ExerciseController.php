@@ -43,12 +43,15 @@ final class ExerciseController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'instructions' => 'required',
+        ]);
+        $exercise->name = $request['name'];
+        $exercise->instructions = $request['instructions'];
+        return $exercise->save();
     }
 
     /**
