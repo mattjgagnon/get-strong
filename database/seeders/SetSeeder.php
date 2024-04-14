@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Set;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-final class SetSeeder extends Seeder
+class SetSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        Set::factory()
-            ->count(50)
-            ->create();
+        //
     }
 }

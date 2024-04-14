@@ -2,41 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSetRequest;
+use App\Http\Requests\UpdateSetRequest;
 use App\Models\Set;
-use Illuminate\Http\Request;
 
-final class SetController extends Controller
+class SetController extends Controller
 {
-    public function index(): string
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return Set::all();
+        //
     }
 
-    public function store(Request $request): string
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $request->validate([
-            'number' => 'required',
-        ]);
-
-        return Set::create($request->all())->toJson();
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreSetRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
     public function show(Set $set)
     {
-        return Set::find($set);
+        //
     }
 
-    public function update(Request $request, Set $set)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Set $set)
     {
-        $request->validate([
-            'number' => 'required',
-        ]);
-        $set->number = $request['number'];
-        return $set->save();
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateSetRequest $request, Set $set)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Set $set)
     {
-        return $set->delete();
+        //
     }
 }
