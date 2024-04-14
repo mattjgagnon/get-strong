@@ -6,14 +6,11 @@ use App\Http\Requests\StoreSetRequest;
 use App\Http\Requests\UpdateSetRequest;
 use App\Models\Set;
 
-class SetController extends Controller
+final class SetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return Set::all();
     }
 
     /**
@@ -24,20 +21,22 @@ class SetController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreSetRequest $request)
     {
-        //
+        $request->validate([
+            'number' => 'required',
+        ]);
+
+        $set = new Set();
+        $set->number = $request->input('number');
+        $set->save();
+
+        return redirect()->route('sets.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Set $set)
     {
-        //
+        return view('sets.show', compact('set'));
     }
 
     /**
@@ -48,19 +47,17 @@ class SetController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateSetRequest $request, Set $set)
     {
-        //
+        $request->validate([
+            'number' => 'required',
+        ]);
+        $set->number = $request['number'];
+        return $set->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Set $set)
     {
-        //
+        return $set->delete();
     }
 }
