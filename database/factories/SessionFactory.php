@@ -21,7 +21,7 @@ final class SessionFactory extends Factory
             'Pull Day',
         ];
         return [
-            'name' => $this->faker->randomElement($exampleSessionNames),
+            'name' => fake()->randomElement($exampleSessionNames),
             'date' => now()->toDateString(),
         ];
     }
